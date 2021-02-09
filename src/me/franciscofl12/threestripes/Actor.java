@@ -16,7 +16,8 @@ public abstract class Actor {
 	protected int x , y; // Coordenadas x e y del actor
 	protected String img; // Imagen del actor
 	protected List<BufferedImage> sprites = new ArrayList<BufferedImage>(); // Lista de archivos de imagen utilizado para representarse en pantalla
-	private Image spriteActual;
+	protected BufferedImage spriteActual = null;
+	protected int velocidadDeCambioDeSprite = 0;  // Esta propiedad indica cada cuantas "unidades de tiempo" debemos mostrar el siguiente sprite del actor
 	
 
 	/**
@@ -37,15 +38,24 @@ public abstract class Actor {
 		this.y = y;
 		this.img = img;
 	}
-
-
+	
 	/**
-	 * Este método abstracto indica que todos los subtipos están obligados a
-	 * implementarlo. Lo usaremos para pintar cada personaje.
-	 * 
-	 * @param g
+	 * Constructor usado cuando el actor solo tiene un unico sprite
+	 * @param spriteName
 	 */
-	public abstract void paint(Graphics g);
+	public Actor (String spriteName) {
+		this.velocidadDeCambioDeSprite = 1;
+		cargarImagenesDesdeSpriteNames(new String[] {spriteName});
+	}
+	
+	/**
+	 * Constructor ampliamente utilizado, indicando los nombres de los sprites a utilizar para mostrar este actor
+	 * @param spriteName
+	 */
+	public Actor (String spriteNames[]) {
+		this.velocidadDeCambioDeSprite = 1;
+		cargarImagenesDesdeSpriteNames(spriteNames);
+	}
 	
 	public List<BufferedImage> getSprites() {
 		return sprites;
